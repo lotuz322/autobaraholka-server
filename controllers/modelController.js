@@ -3,8 +3,8 @@ const ApiError = require('../error/ApiError')
 
 class ModelController {
     async create(req, res) {
-        const {name} = req.body
-        const model = await Model.create({name})
+        const {name, brandId} = req.body
+        const model = await Model.create({name, brandId})
         return res.json(model)
     }
 
