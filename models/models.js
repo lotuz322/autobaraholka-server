@@ -7,6 +7,7 @@ const User = sequelize.define('user', {
     secondName: {type: DataTypes.STRING, unique: true},
     email: {type: DataTypes.STRING, unique: true},
     password: {type: DataTypes.STRING},
+    telephone: {type: DataTypes.STRING},
     role: {type: DataTypes.STRING, defaultValue: 'USER'},
 })
 
@@ -16,6 +17,7 @@ const Product = sequelize.define('product', {
     description: {type: DataTypes.STRING, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
     img: {type: DataTypes.STRING, allowNull: false},
+    isUsed: {type: DataTypes.BOOLEAN, allowNull: false}
 })
 
 const Brand = sequelize.define('brand', {
@@ -25,7 +27,7 @@ const Brand = sequelize.define('brand', {
 
 const Model = sequelize.define('model', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: true, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false},
 })
 
 const ProductInfo = sequelize.define('product_info', {
@@ -34,8 +36,9 @@ const ProductInfo = sequelize.define('product_info', {
     description: {type: DataTypes.STRING, allowNull: false},
 })
 
-const ModelBrand = sequelize.define('model_brand', {
+const ProductType = sequelize.define('product_type', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, unique: true, allowNull: false},
 })
 
 User.hasMany(Product)
@@ -47,6 +50,9 @@ ProductInfo.belongsTo(Product)
 Model.hasMany(Product)
 Product.belongsTo(Model)
 
+ProductType.hasMany(Product)
+Product.belongsTo(ProductType)
+
 Brand.hasMany(Product)
 Product.belongsTo(Brand)
 
@@ -54,5 +60,5 @@ Brand.hasMany(Model)
 Model.belongsTo(Brand)
 
 module.exports = {
-    User, Brand, Product, Model, ProductInfo, ModelBrand
+    User, Brand, Product, Model, ProductInfo, ProductType
 }
